@@ -1,6 +1,9 @@
 import { useState } from "react";
 import "./App.css";
+import { DarkModeProvider } from "./components/context/DarkModeContext";
 import TodoAddForm from "./components/TodoAddForm";
+import TodoFilter from "./components/TodoFilter";
+import TodoItem from "./components/TodoItem";
 
 function App() {
   const [todos, setTodos] = useState([
@@ -12,15 +15,23 @@ function App() {
     setTodos([...todos, added]);
   };
 
+  const handleDelete = (deleted) => {
+    setTodos(todos.filter((del) => del.text != deleted.text));
+  };
   return (
-    <div className="todoList">
-      <ul>
-        {todos.map((item) => (
-          <li key={item.id}>{item.text}</li>
-        ))}
-      </ul>
-      <TodoAddForm addTodo={handleAdd} />
-    </div>
+    <DarkModeProvider>
+      <div className="todoList">
+        <TodoFilter />
+        <ul>
+          {todos.map((item) => (
+            <li key={item.id}>
+              <TodoItem todo={item} delTodo={handleDelete} />
+            </li>
+          ))}
+        </ul>
+        <TodoAddForm addTodo={handleAdd} />
+      </div>
+    </DarkModeProvider>
   );
 }
 

@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+import uuid from "react-uuid";
 import React, { useState } from "react";
 
 function TodoAddForm({ addTodo }) {
@@ -6,12 +6,13 @@ function TodoAddForm({ addTodo }) {
 
   const handleChange = (e) => {
     const text = e.target.value;
-    setForm({ id: uuidv4(), text, status: "active" });
+    setForm({ id: uuid(), text, status: "active" });
   };
 
   const handleAdd = (e) => {
     e.preventDefault();
     addTodo(form);
+    setForm({ id: "", text: "", status: "" });
   };
 
   return (
